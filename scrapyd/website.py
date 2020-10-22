@@ -81,13 +81,11 @@ class Home(resource.Resource):
 <li><a href="http://scrapyd.readthedocs.org/en/latest/">Documentation</a></li>
 </ul>
 
-<p>Available projects: <b>%(projects)s</b></p>
 <p>Available projects:<p>
 """ % vars
         if self.root.scheduler.list_projects():
             s += '<ul>' 
-            for x in sorted(self.root.scheduler.list_projects()):
-                s += '<li>' + x + '</li>'
+            s += ''.join(['<li>' + x + '</li>' for x in sorted(self.root.scheduler.list_projects())])
             s += '</ul>'
         else:
             s += '<b>no projects</b>'
