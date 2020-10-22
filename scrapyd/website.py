@@ -85,12 +85,12 @@ class Home(resource.Resource):
 """ % vars
         if self.root.scheduler.list_projects():
             s += '<ul>' 
-            s += ''.join(['<li>' + x + '</li>' for x in sorted(self.root.scheduler.list_projects())])
+            for x in sorted(self.root.scheduler.list_projects()):
+                s += '<li>' + x + '</li>'
             s += '</ul>'
         else:
             s += '<b>no projects</b>'
         s += """
-
 <h2>How to schedule a spider?</h2>
 
 <p>To schedule a spider you need to use the API (this web UI is only for
