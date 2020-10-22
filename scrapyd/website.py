@@ -65,15 +65,12 @@ class Home(resource.Resource):
         self.local_items = local_items
 
     def render_GET(self, txrequest):
-        vars = {
-            'projects': ', '.join(self.root.scheduler.list_projects())
-        }
+        vars = {}
         s = """
 <html>
 <head><title>Scrapyd</title></head>
 <body>
 <h1>Scrapyd</h1>
-<p>Available projects: <b>%(projects)s</b></p>
 <ul>
 <li><a href="/jobs">Jobs</a></li>
 """ % vars
@@ -83,6 +80,17 @@ class Home(resource.Resource):
 <li><a href="/logs/">Logs</a></li>
 <li><a href="http://scrapyd.readthedocs.org/en/latest/">Documentation</a></li>
 </ul>
+
+<p>Available projects: <b>%(projects)s</b></p>
+<p>Available projects:<p>
+""" % vars
+        if self.root.scheduler.list_projects():
+            s += '<ul>' 
+            s += ''.join(['<li>' + x + '</li>' for x in sorted(self.root.scheduler.list_projects())])
+            s += '</ul>'
+        else:
+            s += '<b>no projects</b>'
+        s += """
 
 <h2>How to schedule a spider?</h2>
 
