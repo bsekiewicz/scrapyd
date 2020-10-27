@@ -1,3 +1,4 @@
+import os
 import sys
 
 from twisted.application.service import Application
@@ -42,8 +43,13 @@ def application(config):
     webpath = config.get('webroot', 'scrapyd.website.Root')
     webcls = load_object(webpath)
 
-    username = config.get('username', '')
-    password = config.get('password', '')
+    username = os.getenv('SCRAPYD_AU')
+    password = os.getenv('SCRAPYD_AP')
+
+    if username is None and password is None:
+        username = config.get('username', '')
+        password = config.get('password', '')
+        
     if username and password:
         if ':' in username:
             sys.exit("The `username` option contains illegal character ':', "
