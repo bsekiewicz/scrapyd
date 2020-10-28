@@ -43,8 +43,8 @@ def application(config):
     webpath = config.get('webroot', 'scrapyd.website.Root')
     webcls = load_object(webpath)
 
-    username = os.getenv('SCRAPYD_AU')
-    password = os.getenv('SCRAPYD_AP')
+    username = os.getenv('SCRAPYD_AUTH_USERNAME')
+    password = os.getenv('SCRAPYD_AUTH_PASSWORD')
 
     if username is None and password is None:
         username = config.get('username', '')
